@@ -43,7 +43,7 @@ p{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:50px;
+    font-size:55px;
     cursor:pointer;
     transition:.3s;
 }
@@ -52,11 +52,35 @@ p{
     transform:scale(1.1);
 }
 
-#message{
-    margin-top:30px;
-    color:white;
-    font-size:2rem;
-    font-weight:bold;
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    justify-content:center;
+    align-items:center;
+}
+
+.popup{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    max-width:400px;
+    width:85%;
+    text-align:center;
+}
+
+button{
+    padding:12px 24px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    margin-top:15px;
+}
+
+#loading{
+    font-size:24px;
 }
 </style>
 </head>
@@ -64,7 +88,11 @@ p{
 <body>
 
 <h1>🎉 Happy Birthday Laxmi! 🎉</h1>
-<p>Choose one of the 4 mystery gifts!</p>
+
+<p>
+I got you 4 special gifts.<br>
+Choose wisely... 🎁
+</p>
 
 <div class="gifts">
     <div class="gift" onclick="openGift()">🎁</div>
@@ -73,20 +101,78 @@ p{
     <div class="gift" onclick="openGift()">🎁</div>
 </div>
 
-<div id="message"></div>
+<div id="loadingModal" class="modal">
+    <div class="popup">
+        <h2>🎁 Opening Gift...</h2>
+        <p id="loading">Loading gift...</p>
+    </div>
+</div>
+
+<div id="resultModal" class="modal">
+    <div class="popup">
+        <h2>🎁 Gift Result</h2>
+        <p id="resultText"></p>
+        <button onclick="showFinal()">Confirm 😭</button>
+    </div>
+</div>
+
+<div id="finalModal" class="modal">
+    <div class="popup">
+        <h2>✋ WAIT WAIT WAIT ✋</h2>
+
+        <p>
+        Don't get mad 😭<br><br>
+
+        I may not have gotten you a real gift,
+        but I still wanted to wish you an amazing birthday ❤️<br><br>
+
+        Hope this year brings lots of happiness,
+        laughter and success! 🎉✨<br><br>
+
+        Happy Birthday Laxmi ❤️🎂
+        </p>
+
+        <button onclick="closeAll()">Awww ❤️</button>
+    </div>
+</div>
 
 <script>
-const jokes = [
-    "😂 LOL! No gifts for you!",
-    "🎁 Empty box. Better luck next year!",
-    "🤣 Did you really think there was a gift?",
-    "💀 Surprise! The gift budget was ₹0."
+
+const gifts = [
+"💀 ABSOLUTELY NOTHING!",
+"😂 Gift Budget Error: ₹0 Found",
+"📦 Empty Box Detected",
+"🚫 404 Gift Not Found"
 ];
 
 function openGift(){
-    let random = jokes[Math.floor(Math.random()*jokes.length)];
-    document.getElementById("message").innerHTML = random;
+
+    document.getElementById("loadingModal").style.display="flex";
+
+    setTimeout(() => {
+
+        document.getElementById("loadingModal").style.display="none";
+
+        let gift = gifts[Math.floor(Math.random()*gifts.length)];
+
+        document.getElementById("resultText").innerHTML=
+        "Congratulations! 🎉<br><br>You won:<br><br><b>"+gift+"</b>";
+
+        document.getElementById("resultModal").style.display="flex";
+
+    },2000);
 }
+
+function showFinal(){
+    document.getElementById("resultModal").style.display="none";
+    document.getElementById("finalModal").style.display="flex";
+}
+
+function closeAll(){
+    document.getElementById("finalModal").style.display="none";
+    alert("🎉 Happy Birthday Laxmi! 🎂❤️");
+}
+
 </script>
 
 </body>
